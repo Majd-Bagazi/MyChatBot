@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MyChatBot</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #1a1a2e;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+    }
+
+    h1 {
+      color: #ffffff;
+      font-size: 36px;
+      text-shadow: 0 0 10px #e754c5;
+      margin-bottom: 20px;
+    }
+
+    .chat-container {
+      background-color: white;
+      border: 3px solid #f8a9c4;
+      box-shadow: 0 0 15px #f8a9c4;
+      border-radius: 20px;
+      width: 450px;
+      height: 550px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .chat-box {
+      padding: 20px;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .bot-msg {
+      align-self: flex-start;
+      background-color: #aee1f9;
+      color: #000;
+      padding: 10px;
+      border-radius: 15px;
+      max-width: 70%;
+      font-size: 18px;
+    }
+
+    .user-msg {
+      align-self: flex-end;
+      background-color: #f8a9c4;
+      color: #000;
+      padding: 10px;
+      border-radius: 15px;
+      max-width: 70%;
+      font-size: 18px;
+    }
+
+    .input-area {
+      display: flex;
+      border-top: 2px solid #ccc;
+      padding: 10px;
+      background-color: transparent;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 15px;
+      border: 2px solid #f8a9c4;
+      outline: none;
+      background-color: #f8d3e0; /* ✅ وردي فاتح */
+      color: black; /* ✅ يوضح الكلام */
+      font-size: 16px;
+    }
+
+    .input-area button {
+      margin-left: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #6cc6ff;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #6cc6ff;
+    }
+
+    .input-area input::placeholder {
+      color: #000;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>MyChatBot</h1>
+  <div class="chat-container">
+    <div class="chat-box" id="chatBox">
+      <div class="bot-msg">أهلاً بكِ يا مهندسة 💗</div>
+    </div>
+    <div class="input-area">
+      <input
+        type="text"
+        id="userInput"
+        placeholder="Type your message..."
+        onkeypress="handleKeyPress(event)"
+      />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const message = input.value.trim();
+      if (message === "") return;
+
+      const chatBox = document.getElementById("chatBox");
+
+      // Add user message
+      const userMsg = document.createElement("div");
+      userMsg.className = "user-msg";
+      userMsg.textContent = message;
+      chatBox.appendChild(userMsg);
+
+      // Scroll to bottom
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // Bot reply logic
+      const reply = getBotReply(message.toLowerCase());
+      setTimeout(() => {
+        const botMsg = document.createElement("div");
+        botMsg.className = "bot-msg";
+        botMsg.textContent = reply;
+        chatBox.appendChild(botMsg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 500);
+
+      input.value = "";
+    }
+
+    function getBotReply(msg) {
+      if (msg.includes("hi") || msg.includes("مرحبا")) {
+        return "Hi there! مرحباً 👋";
+      } else if (msg.includes("مين افضل مهندسة؟")) {
+        return "مجد 💗";
+      } else if (msg.includes("who is the best engineer?")) {
+        return "joudy 💗";
+      } else {
+        return "أنا هنا للمساعدة 💬";
+      }
+    }
+
+    function handleKeyPress(e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    }
+  </script>
+</body>
+</html>
+
+
+
+
